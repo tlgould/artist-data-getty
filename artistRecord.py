@@ -5,7 +5,7 @@ Created on 10 Jul 2017
 '''
 from django.views.generic.base import View
 from django.http import HttpResponse
-from getty_getter import getty_getter as getty
+import getty_getter as getty
 import json
 
 
@@ -56,6 +56,8 @@ class artistRecord(object):
         '''
         Returns a name for a given ULAN id
         '''
+        self.ULAN_name = getty.get_getty_artist_name((self.ULAN_id))
+        
         return json.dumps(getty.get_getty_artist_name(self.ULAN_id))
     
     
@@ -65,8 +67,10 @@ class artistRecord(object):
         '''
         variant_names= getty.get_getty_artist_var_names(self.ULAN_id)
         return variant_names
+    
     def getPlaceofBirthAndDeath(self):
         places=getty.get_artist_place_of_birth_death(self.ULAN_id)
-        print places[0] +"Birth"
-        print places[1]
+        self.place_of_birth=places[0];
+        self.place_of_death=places[1];
+    
         

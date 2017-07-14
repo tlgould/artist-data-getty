@@ -35,36 +35,48 @@ def get_artist_place_of_birth_death(ulan):
 	data = json.loads(result.content)
 	
 	bindings = data['results']['bindings']
+	deathPlace='NULL'
+	birthPlace='NULL'
 	for binding in bindings:
 		if binding['Predicate']['value']== 'http://schema.org/deathPlace':
 			deathPlace= binding['Object']['value']
+			if deathPlace is not None:
+				deathPlace=deathPlace[27:-6]
+				print deathPlace
+				deathPlace=get_place_name_from_tgn(deathPlace)
+				print deathPlace
+			
+			
 		elif binding['Predicate']['value']== 'http://schema.org/birthPlace':
 			birthPlace= binding['Object']['value']
-	if deathPlace is not None:
-		deathPlace=deathPlace[27:-6]
-		print deathPlace
-		deathPlace=get_place_name_from_tgn(deathPlace)
-		#Get the TGN place name from the reference number
-	if birthPlace is not None:
-		birthPlace=birthPlace[27:-6]
-		birthPlace=get_place_name_from_tgn(birthPlace)
-		#Get the TGN place name from the reference number - short function method?
-		
-	places=[birthPlace,deathPlace]
+			if birthPlace is not None:
+				birthPlace=birthPlace[27:-6]
+				birthPlace=get_place_name_from_tgn(birthPlace)
 	
+		
+	if birthPlace is not 'NULL' and deathPlace is not 'NULL':
+		places=[birthPlace,deathPlace]
+	elif birthPlace is not None:
+		places=[birthPlace,'']
+	elif deathPlace is not None:
+		places=['',deathPlace]
+		
 	return places
 	
 def get_place_name_from_tgn(tgn):
+	placeName=''
+	print 'TGN ID: '+ tgn
 	url="http://vocab.getty.edu/tgn/%s.json" % tgn
 	print url
 	placeResult=requests.get(url)
 	placeData = json.loads(placeResult.content)
 	bindings = placeData['results']['bindings']
 	for binding in bindings:
-		if binding['Object']['type']=='literal':
+		if binding['Predicate']['value']=='http://www.w3.org/2000/01/rdf-schema#label':
 			placeName=binding['Object']['value']
 			break
 		
+	print 'PlaceName: '+ placeName
 	return placeName
 			
 		

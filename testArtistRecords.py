@@ -30,11 +30,14 @@ if __name__ == '__main__':
     list1.append(artistRecord("0","wikidataID","MimsyNumber","William","Mosman"))
     for  i in range(len(list1)):
         list1[i].getULANbyName()
-        print list1[i].ULAN_id
-        print list1[i].ULAN_id
-    print list1[1].getNamebyULAN()
-    t = list1[1].getAllArtistNames()
-    p= list1[1].getPlaceofBirthAndDeath()
+        list1[i].getNamebyULAN()
+        list1[i].getAllArtistNames()
+        list1[i].getPlaceofBirthAndDeath()
+
+    t = list1[2].getAllArtistNames()
+    p= list1[0].getPlaceofBirthAndDeath()
+    print list1[0].place_of_birth
+    
     print t
     print("END")
     pass
