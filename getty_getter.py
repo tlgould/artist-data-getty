@@ -42,9 +42,10 @@ def get_artist_place_of_birth_death(ulan):
 			deathPlace= binding['Object']['value']
 			if deathPlace is not None:
 				deathPlace=deathPlace[27:-6]
-				print deathPlace
+				#print deathPlace
 				deathPlace=get_place_name_from_tgn(deathPlace)
-				print deathPlace
+				#print deathPlace
+				break
 			
 			
 		elif binding['Predicate']['value']== 'http://schema.org/birthPlace':
@@ -65,15 +66,15 @@ def get_artist_place_of_birth_death(ulan):
 	
 def get_place_name_from_tgn(tgn):
 	placeName=''
-	print 'TGN ID: '+ tgn
+	#print 'TGN ID: '+ tgn
 	url="http://vocab.getty.edu/tgn/%s.json" % tgn
-	print url
+	#print url
 	placeResult=requests.get(url)
 	placeData = json.loads(placeResult.content)
 	bindings = placeData['results']['bindings']
 	for binding in bindings:
 		if binding['Predicate']['value']=='http://www.w3.org/2000/01/rdf-schema#label':
-			placeName=binding['Object']['value']
+			placeName = binding['Object']['value']
 			break
 		
 	print 'PlaceName: '+ placeName
