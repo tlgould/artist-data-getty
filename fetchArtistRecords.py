@@ -5,6 +5,7 @@ Main code to read in CSV file, fetch ULAN id's and names.
 @author: tgould
 '''
 import csv
+import unicodecsv
 import argparse
 from artistRecord import artistRecord
 
@@ -41,10 +42,26 @@ def queryListAgainstULAN(artistRecordList):
             print('ULAN: ' + artistRecordList[i].ULAN_id + ' ULAN NAME: ' + artistRecordList[i].ULAN_name)
         else:
             print('Unable to query further information without ULAN id for: '+ artistRecordList[i].last_name +' '+ artistRecordList[i].first_name)
-              
     
-    
-    
+    return artistRecordList
+            
+def exportArtistRecordToCSV(artistRecords = []):
+    '''
+    Writes the ArtistRecordList to a CSV file for passing on to outside sources
+    '''
+    with open ("/Users/tgould/Desktop/test-output01.csv", "wb") as f:
+        writer = unicodecsv.writer(f,delimiter=',',quotechar='|', quoting=csv.QUOTE_MINIMAL)
+        for i in range(len(artistRecords)):
+            writer.writerow([artistRecords[i].mimsyNumber, artistRecords[i].ULAN_id, artistRecords[i].ULAN_name ,artistRecords[i].last_name, artistRecords[i].first_name, artistRecords[i].place_of_birth, artistRecords[i].place_of_death])
+            print artistRecords[i].variant_names
+            outputUnic=''
+            for j in range(len(artistRecords[i].variant_names)):
+                print j
+                outputUnic=outputUnic+artistRecords[i].variant_names[j]+';'
+                print type(outputUnic)
+            outputUnic=outputUnic.replace(',', '/')    
+            writer.writerow([outputUnic])
+            
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Type filepath to Artist CSV file.')
     parser.add_argument('FilePath', )
@@ -56,6 +73,8 @@ if __name__ == '__main__':
     print artistRecordList
     print artistRecordList[1]
     artistRecordList = queryListAgainstULAN(artistRecordList)
+    exportArtistRecordToCSV(artistRecordList)
+    
     
        
     pass

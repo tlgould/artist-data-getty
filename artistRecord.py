@@ -39,6 +39,7 @@ class artistRecord(object):
         self.wikidata_id=wikidataID
         self.first_name=firstName
         self.last_name=lastName
+        self.variant_names= []
     
     def getULANbyName(self):
         '''
@@ -58,15 +59,20 @@ class artistRecord(object):
         '''
         self.ULAN_name = getty.get_getty_artist_name((self.ULAN_id))
         
-        return json.dumps(getty.get_getty_artist_name(self.ULAN_id))
-    
+        s= json.dumps(getty.get_getty_artist_name(self.ULAN_id))
+        print s
+        s=s.replace(',', ';')
+        return s
     
     def getAllArtistNames(self):
         '''
         This method will return all variant names associted with the ULAN id
         '''
-        variant_names= getty.get_getty_artist_var_names(self.ULAN_id)
-        return variant_names
+        self.variant_names= getty.get_getty_artist_var_names(self.ULAN_id)
+        for i in range(len(self.variant_names)):
+            print type(self.variant_names[i])
+            print self.variant_names[i]
+        return self.variant_names
     
     def getPlaceofBirthAndDeath(self):
         places=getty.get_artist_place_of_birth_death(self.ULAN_id)
