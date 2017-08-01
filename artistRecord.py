@@ -26,6 +26,9 @@ class artistRecord(object):
     place_of_birth=""
     place_of_death=""
     variant_names=[]
+    wikipedia_url=""
+    wikipedia_intro=""
+    
     
     
 
@@ -49,6 +52,10 @@ class artistRecord(object):
         This method makes use of SFMOMA's GettyGetter Library 
         '''
         y=json.loads(json.dumps(getty.get_getty_ulan(u""+self.last_name+","+self.first_name)))
+        print y
+        if not y:
+            self.ULAN_id='0000'
+            return
         x=y.pop(0)
         print(x.get('ulan'))
         self.ULAN_id=x.get('ulan')

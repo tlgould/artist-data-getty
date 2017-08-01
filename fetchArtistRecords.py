@@ -34,6 +34,8 @@ def queryListAgainstULAN(artistRecordList):
         #Need to determine if we have a ULAN id yet
         if artistRecordList[i].ULAN_id == '0':
             artistRecordList[i].getULANbyName();
+            if artistRecordList[i].ULAN_id == '0000':
+                continue
                
         if artistRecordList[i].ULAN_id !='0':
             artistRecordList[i].getNamebyULAN()
