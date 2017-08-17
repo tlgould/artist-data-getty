@@ -77,7 +77,7 @@ def get_place_name_from_tgn(tgn):
 			placeName = binding['Object']['value']
 			break
 		
-	print 'PlaceName: '+ placeName
+	#print 'PlaceName: '+ placeName
 	return placeName
 			
 		

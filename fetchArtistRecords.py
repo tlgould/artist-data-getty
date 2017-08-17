@@ -73,7 +73,7 @@ if __name__ == '__main__':
     print artist_csv_list
     artistRecordList = createListofArtistRecords(artist_csv_list)
     print artistRecordList
-    print artistRecordList[1]
+    print artistRecordList[0]
     artistRecordList = queryListAgainstULAN(artistRecordList)
     exportArtistRecordToCSV(artistRecordList)
     
