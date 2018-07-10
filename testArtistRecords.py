@@ -21,7 +21,7 @@ def loadCSVFile(csvFilePath):
 
 if __name__ == '__main__':
     print("This code is executed when %s is exectuted")
-    loadCSVFile('/Users/tgould/Desktop/testcsv.csv')
+    #loadCSVFile('/Users/tgould/Desktop/testcsv.csv')
     list1=[]
     list2=[]
     
